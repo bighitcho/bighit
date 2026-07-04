@@ -1,0 +1,24 @@
+name: Meta 토큰 자동 갱신 (주간)
+
+on:
+  schedule:
+    - cron: "0 3 * * 1" # 매주 월요일 KST 정오 무렵
+  workflow_dispatch: {}
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - name: 토큰 갱신
+        env:
+          META_APP_ID: ${{ secrets.META_APP_ID }}
+          META_APP_SECRET: ${{ secrets.META_APP_SECRET }}
+          IG_LONG_LIVED_TOKEN: ${{ secrets.IG_LONG_LIVED_TOKEN }}
+          THREADS_LONG_LIVED_TOKEN: ${{ secrets.THREADS_LONG_LIVED_TOKEN }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: npm run refresh-tokens

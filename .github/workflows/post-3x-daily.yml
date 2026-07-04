@@ -1,0 +1,42 @@
+name: 카드뉴스 하루 3회 자동 게시
+
+on:
+  schedule:
+    # 한국시간(KST) 기준 08:00 / 13:00 / 20:00 = UTC 23:00(전날) / 04:00 / 11:00
+    - cron: "0 23,4,11 * * *"
+  workflow_dispatch: {} # 수동 실행 버튼으로도 테스트 가능
+
+permissions:
+  contents: write
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+
+      - name: 카드뉴스 생성 및 게시
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          IG_LONG_LIVED_TOKEN: ${{ secrets.IG_LONG_LIVED_TOKEN }}
+          IG_BUSINESS_ACCOUNT_ID: ${{ secrets.IG_BUSINESS_ACCOUNT_ID }}
+          IG_HANDLE: ${{ secrets.IG_HANDLE }}
+          THREADS_LONG_LIVED_TOKEN: ${{ secrets.THREADS_LONG_LIVED_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          CARD_THEME: ${{ vars.CARD_THEME || 'gray' }}
+          DRY_RUN: ${{ vars.DRY_RUN || 'false' }}
+        run: npm run run-once
+
+      - name: 생성된 이미지 아티팩트 업로드
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: card-news-output
+          path: out/
+          retention-days: 7
