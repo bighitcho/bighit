@@ -9,7 +9,9 @@ GitHub Actions로 **하루 3번 자동 실행**됩니다.
 1. `data/queue.json` 에 채워둔 소재(유튜브 링크 / 링크 / 주제)를 순서대로 하나씩 사용
 2. 큐가 비어있으면 `data/topics-config.json` 의 카테고리로 구글 뉴스에서 자동으로 소재 발굴 (혼합 방식)
 3. Gemini API로 카드뉴스 제목/본문/캡션/스레드 텍스트 생성
-4. `satori` + `resvg`로 카드 이미지 여러 장을 PNG로 렌더링 (템플릿 3종: `gray`/`blue`/`square`)
+   - `docs/instagram-content-strategy-prompts.md` 의 원칙을 적용한 **7장 구성**:
+     후킹 표지 → 문제 → 원인 → 해결 1 → 해결 2/사례 → 정리 체크리스트 → CTA
+4. `satori` + `resvg`로 카드 이미지 7장을 PNG로 렌더링 (템플릿 3종: `gray`/`blue`/`square`)
 5. 이미지를 저장소에 커밋해 공개 URL(raw.githubusercontent.com)로 만듦
 6. Instagram Graph API로 캐러셀 게시, Threads API로 동일 이미지 게시
 7. 사용한 소재/게시 결과를 `data/history.json` 에 기록

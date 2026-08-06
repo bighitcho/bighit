@@ -37,6 +37,21 @@ function card(theme, children, extraStyle = {}) {
   };
 }
 
+// satori는 문자열 안의 \n을 줄바꿈으로 렌더링하지 않으므로 줄 단위 div로 쪼갠다.
+function multiline(text, style) {
+  const lines = String(text).split("\n");
+  return {
+    type: "div",
+    props: {
+      style: { display: "flex", flexDirection: "column", ...style },
+      children: lines.map((line) => ({
+        type: "div",
+        props: { style: { display: "flex" }, children: line || " " },
+      })),
+    },
+  };
+}
+
 function pill(theme, text) {
   return {
     type: "div",
@@ -121,20 +136,13 @@ export function buildCover(theme, slide, ctx) {
         children: [
           slide.date ? pill(theme, slide.date) : { type: "div", props: { style: { display: "none" }, children: [] } },
           slide.eyebrow ? highlightText(theme, slide.eyebrow) : { type: "div", props: { style: { display: "none" }, children: [] } },
-          {
-            type: "div",
-            props: {
-              style: {
-                display: "flex",
-                fontSize: 72,
-                fontWeight: 800,
-                color: theme.ink,
-                lineHeight: 1.2,
-                marginTop: 12,
-              },
-              children: slide.headline,
-            },
-          },
+          multiline(slide.headline, {
+            fontSize: 72,
+            fontWeight: 800,
+            color: theme.ink,
+            lineHeight: 1.2,
+            marginTop: 12,
+          }),
           slide.subheadline
             ? {
                 type: "div",
@@ -165,7 +173,7 @@ export function buildContent(theme, slide, ctx) {
       props: {
         style: { display: "flex", flexDirection: "column", gap: 30 },
         children: [
-          pill(theme, `STEP ${slide.index}`),
+          pill(theme, slide.label || `STEP ${slide.index}`),
           {
             type: "div",
             props: {
@@ -180,20 +188,13 @@ export function buildContent(theme, slide, ctx) {
               children: slide.heading,
             },
           },
-          {
-            type: "div",
-            props: {
-              style: {
-                display: "flex",
-                fontSize: 38,
-                fontWeight: 400,
-                color: theme.inkSoft,
-                lineHeight: 1.6,
-                marginTop: 4,
-              },
-              children: slide.body,
-            },
-          },
+          multiline(slide.body, {
+            fontSize: 38,
+            fontWeight: 400,
+            color: theme.inkSoft,
+            lineHeight: 1.6,
+            marginTop: 4,
+          }),
         ],
       },
     },
