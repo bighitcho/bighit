@@ -1,3 +1,5 @@
+import { withDisclosure, assertDisclosure } from "../compliance/disclosure.js";
+
 const THREADS_BASE = "https://graph.threads.net/v1.0";
 
 async function postForm(url, params) {
@@ -15,6 +17,9 @@ async function postForm(url, params) {
  * @param {{token: string, userId: string}} opts
  */
 export async function publishThreadsCarousel(imageUrls, text, opts) {
+  // 의무 표시 문구는 게시 직전에 한 번 더 보정한다(이미 있으면 그대로).
+  const safeText = assertDisclosure(withDisclosure(text, { channel: "threads" }), "스레드 게시글");
+
   const childIds = [];
   for (const imageUrl of imageUrls) {
     const item = await postForm(`${THREADS_BASE}/${opts.userId}/threads`, {
@@ -29,7 +34,7 @@ export async function publishThreadsCarousel(imageUrls, text, opts) {
   const container = await postForm(`${THREADS_BASE}/${opts.userId}/threads`, {
     media_type: "CAROUSEL",
     children: childIds.join(","),
-    text,
+    text: safeText,
     access_token: opts.token,
   });
 

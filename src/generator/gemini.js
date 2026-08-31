@@ -1,3 +1,5 @@
+import { withDisclosure, CHANNEL_LIMITS, DISCLOSURE_BLOCK } from "../compliance/disclosure.js";
+
 const API_BASE = "https://generativelanguage.googleapis.com/v1beta/models";
 
 const RESPONSE_SCHEMA = {
@@ -32,6 +34,9 @@ function buildPrompt(source) {
 - 문장은 짧고 쉬운 말로, 신뢰도 있는 톤으로 작성해.
 - 과장되거나 검증 안 된 사실은 쓰지 마.
 - 이모지는 쓰지 마 (카드 이미지 폰트에서 깨질 수 있어).
+- 아래 의무 표시 문구는 게시 직전에 시스템이 자동으로 붙이니 네가 다시 쓰지는 마.
+  다만 잘리지 않도록 igCaption은 2000자, threadsText는 350자 안쪽으로 써줘.
+${DISCLOSURE_BLOCK}
 - 응답은 반드시 지정된 JSON 스키마 형식으로만 반환해.`;
 
   if (source.kind === "youtube") {
@@ -111,7 +116,9 @@ export function toDeck(content, { themeName, handle }) {
     themeName,
     handle,
     slides,
-    igCaption: content.igCaption,
-    threadsText: content.threadsText,
+    // 쿠팡 파트너스 / AI 생성물 의무 표시 문구를 여기서 먼저 붙인다.
+    // (게시 직전 publish 단계에서 한 번 더 검사하지만, dry-run 미리보기에도 보이도록)
+    igCaption: withDisclosure(content.igCaption, { limit: CHANNEL_LIMITS.instagram }),
+    threadsText: withDisclosure(content.threadsText, { limit: CHANNEL_LIMITS.threads }),
   };
 }

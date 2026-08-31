@@ -89,6 +89,7 @@ node scripts/render-sample.js gray   # gray / blue / square
 src/
   index.js              메인 실행 스크립트 (1회 실행 = 1개 게시)
   queue.js              소재 큐 + 트렌드 자동 발굴
+  compliance/           쿠팡 파트너스 / AI 생성물 의무 표시 문구 (문구의 유일한 출처)
   content-source/       유튜브/링크/주제 → Gemini 입력으로 변환
   generator/gemini.js   Gemini API 호출 + 카드 데이터 변환
   render/               satori 기반 카드 이미지 렌더러 + 템플릿 3종
@@ -97,10 +98,44 @@ data/
   queue.json            소재 큐 (직접 편집)
   topics-config.json    자동 발굴용 카테고리 목록 (직접 편집)
   history.json          게시 기록 / 중복 방지용 로그
+test/
+  disclosure.test.js         표시 문구 규칙 테스트
+  publish-disclosure.test.js 실제 게시 요청에 문구가 담기는지 검증
+scripts/
+  disclosure.js         수동 게시용 표시 문구 CLI
+docs/
+  coupang-partners-disclosure.md  채널별 적용 / 다른 프로젝트 이식 가이드
 .github/workflows/
-  post-3x-daily.yml     하루 3회 cron 실행
+  post-3x-daily.yml     하루 3회 cron 실행 (게시 전 npm test 로 문구 규칙 확인)
   refresh-tokens.yml    60일 토큰 자동 갱신 (주 1회)
 ```
+
+## 쿠팡 파트너스 / AI 생성물 의무 표시 문구
+
+쿠팡 파트너스 링크나 AI로 만든 이미지·가상인물이 들어간 게시물에는 **채널과 관계없이**
+아래 두 줄이 반드시 들어갑니다.
+
+```
+(긴급공지) 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
+광고, 인공지능(AI)을 기반으로 생성된 가상인물이 포함된 게시물입니다
+```
+
+- 인스타그램·스레드 자동 게시는 **코드에서 자동으로** 붙입니다 (`src/compliance/disclosure.js`).
+  캡션에 문구가 없으면 게시 API를 호출하지 않고 에러로 중단됩니다.
+- 길이 제한(인스타 2200자 / 스레드 500자)에 걸리면 표시 문구가 아니라 본문이 줄어듭니다.
+- 이미 문구가 들어있는 본문에는 다시 붙지 않습니다(중복 방지).
+
+네이버 블로그, 쿠팡 쇼핑처럼 **직접 손으로 올리는 채널**은 아래 명령으로 문구를 받아 쓰세요.
+
+```bash
+npm run disclosure                          # 문구 2줄만 출력 (복사용)
+node scripts/disclosure.js 초안.txt          # 초안 뒤에 문구를 붙여서 출력
+node scripts/disclosure.js 초안.txt --start  # 초안 맨 앞에 붙여서 출력 (블로그 권장)
+node scripts/disclosure.js 초안.txt --check  # 문구가 빠졌는지 검사
+```
+
+다른 프로젝트에도 똑같이 적용하는 방법(전역 `~/.claude/CLAUDE.md` 설정 포함)은
+[`docs/coupang-partners-disclosure.md`](docs/coupang-partners-disclosure.md) 를 보세요.
 
 ## 참고 사항
 

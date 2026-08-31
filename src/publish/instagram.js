@@ -1,3 +1,5 @@
+import { withDisclosure, assertDisclosure } from "../compliance/disclosure.js";
+
 const GRAPH_BASE = "https://graph.facebook.com/v21.0";
 
 async function postForm(url, params) {
@@ -16,6 +18,9 @@ async function postForm(url, params) {
  * @returns {Promise<{permalink: string|null, mediaId: string}>}
  */
 export async function publishInstagramCarousel(imageUrls, caption, opts) {
+  // 의무 표시 문구는 게시 직전에 한 번 더 보정한다(이미 있으면 그대로).
+  const safeCaption = assertDisclosure(withDisclosure(caption, { channel: "instagram" }), "인스타그램 캡션");
+
   const childIds = [];
   for (const imageUrl of imageUrls) {
     const item = await postForm(`${GRAPH_BASE}/${opts.igUserId}/media`, {
@@ -29,7 +34,7 @@ export async function publishInstagramCarousel(imageUrls, caption, opts) {
   const container = await postForm(`${GRAPH_BASE}/${opts.igUserId}/media`, {
     media_type: "CAROUSEL",
     children: childIds.join(","),
-    caption,
+    caption: safeCaption,
     access_token: opts.token,
   });
 

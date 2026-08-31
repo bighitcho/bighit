@@ -21,6 +21,9 @@ jobs:
 
       - run: npm ci
 
+      - name: 의무 표시 문구 규칙 확인
+        run: npm test
+
       - name: 카드뉴스 생성 및 게시
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}

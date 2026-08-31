@@ -10,7 +10,9 @@
   "scripts": {
     "run-once": "node src/index.js",
     "render-sample": "node scripts/render-sample.js",
-    "refresh-tokens": "node scripts/refresh-tokens.js"
+    "refresh-tokens": "node scripts/refresh-tokens.js",
+    "test": "node --test test/*.test.js",
+    "disclosure": "node scripts/disclosure.js"
   },
   "dependencies": {
     "@resvg/resvg-js": "^2.6.2",
