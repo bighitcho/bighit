@@ -48,7 +48,7 @@ function buildPrompt(source) {
  * @param {{apiKey: string, model?: string}} opts
  */
 export async function generateCardNewsContent(source, opts) {
-  const model = opts.model || "gemini-2.5-flash";
+  const model = opts.model || "gemini-3.6-flash";
   const parts = [];
   if (source.kind === "youtube") {
     parts.push({ fileData: { fileUri: source.youtubeUrl } });
