@@ -1,4 +1,5 @@
 name: Typecast voice sample
+# SDK 0.3.14 audio decoding verified locally.
 on:
   push:
     branches: [codex/youtube-drive-automation]
