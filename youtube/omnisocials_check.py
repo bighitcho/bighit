@@ -40,8 +40,14 @@ def check():
                          sort_keys=True))
         return 0
     except urllib.error.HTTPError as error:
-        hints = {401: "invalid_key", 403: "accounts_read_scope_required",
+        hints = {401: "invalid_key", 403: "access_denied",
                  429: "rate_limited"}
+        body = error.read(32768).decode("utf-8", errors="replace").lower()
+        kind = "json" if "application/json" in error.headers.get("Content-Type", "") else "non_json"
+        print(json.dumps({"response_kind": kind,
+                          "mentions_accounts_read": "accounts:read" in body,
+                          "mentions_cloudflare": "cloudflare" in body,
+                          "mentions_scope": "scope" in body}))
         print("CHECK_FAILED: HTTP " + str(error.code) + " " +
               hints.get(error.code, "request_rejected"))
     except Exception:
