@@ -47,7 +47,7 @@ def generate(text, destination, voice_id=None):
         seed=42)
     # One paid synthesis request; no automatic retry of paid operations.
     response = client.text_to_speech_with_timestamps(request, granularity="word")
-    audio = response.audio_bytes()
+    audio = response.audio_bytes
     if not audio or response.audio_duration <= 0 or not response.words:
         raise ValueError("음성 또는 타임스탬프가 비어 있습니다.")
     destination.parent.mkdir(parents=True, exist_ok=True)
