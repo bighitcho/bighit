@@ -1,0 +1,58 @@
+name: 유튜브 Drive 자동화
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 연결 점검 또는 예약 작업 실행
+        type: choice
+        options: [check, run]
+        default: check
+  schedule:
+    - cron: '17,47 * * * *'
+  pull_request:
+    paths: ['youtube/**', '.github/workflows/youtube-drive.yml']
+
+permissions:
+  contents: read
+
+# All branches/runs share one lock. Never start a second local worker alongside it.
+concurrency:
+  group: youtube-drive-single-writer
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    if: github.event_name != 'schedule' || vars.YOUTUBE_AUTOMATION_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s youtube/tests -v
+
+  process:
+    needs: validate
+    if: github.event_name != 'pull_request' && (github.event_name == 'workflow_dispatch' || vars.YOUTUBE_AUTOMATION_ENABLED == 'true')
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: 영상 처리 도구 준비
+        run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg fonts-noto-cjk
+      - name: Drive 대기열 확인 및 YouTube 처리
+        env:
+          MODE: ${{ inputs.mode || 'run' }}
+          YOUTUBE_AUTOMATION_ENABLED: ${{ vars.YOUTUBE_AUTOMATION_ENABLED || 'false' }}
+          GOOGLE_CLIENT_ID: ${{ secrets.YOUTUBE_GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.YOUTUBE_GOOGLE_CLIENT_SECRET }}
+          DRIVE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_DRIVE_REFRESH_TOKEN }}
+          YOUTUBE_CHANNEL_TOKENS_JSON: ${{ secrets.YOUTUBE_CHANNEL_TOKENS_JSON }}
+          DRIVE_QUEUE_FOLDER_ID: ${{ vars.YOUTUBE_DRIVE_QUEUE_FOLDER_ID }}
+          DRIVE_STATE_FOLDER_ID: ${{ vars.YOUTUBE_DRIVE_STATE_FOLDER_ID }}
+          DRIVE_OUTPUT_FOLDER_ID: ${{ vars.YOUTUBE_DRIVE_OUTPUT_FOLDER_ID }}
+        run: python youtube/worker.py "$MODE"
+      # Never upload private Drive state, OAuth tokens or session URLs as public artifacts.

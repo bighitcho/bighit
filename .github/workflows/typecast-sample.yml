@@ -1,0 +1,33 @@
+name: Typecast voice sample
+# SDK 0.3.14 audio decoding verified locally.
+on:
+  push:
+    branches: [codex/youtube-drive-automation]
+    paths: [.github/workflows/typecast-sample.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: typecast-sample
+  cancel-in-progress: false
+jobs:
+  sample:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install typecast-python==0.3.14
+      - name: Verify Typecast key and generate one short sample
+        env:
+          TYPECAST_API_KEY: ${{ secrets.TYPECAST_API_KEY }}
+          TYPECAST_VOICE_ID: ${{ vars.TYPECAST_VOICE_ID }}
+        run: python youtube/typecast_narration.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: typecast-voice-sample
+          path: typecast-output/
+          if-no-files-found: error
+          retention-days: 7
