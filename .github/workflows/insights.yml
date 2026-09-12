@@ -1,0 +1,33 @@
+name: 발행 24시간 후 성과 점검 (매일)
+
+on:
+  schedule:
+    - cron: "0 1 * * *" # KST 오전 10시
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  insights:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+
+      - name: 도달·저장·공유 수집 및 집계
+        env:
+          IG_LONG_LIVED_TOKEN: ${{ secrets.IG_LONG_LIVED_TOKEN }}
+        run: npm run insights
+
+      - name: 결과 커밋
+        if: always()
+        run: |
+          git config user.name "card-news-bot"
+          git config user.email "card-news-bot@users.noreply.github.com"
+          git add data/history.json data/insights.json
+          git diff --staged --quiet || git commit -m "chore: 게시물 성과 지표 업데이트"
+          git push origin HEAD:${GITHUB_REF_NAME}

@@ -1,4 +1,17 @@
-// satori용 슬라이드 트리 빌더. slide.type 별로 커버/본문/마무리 레이아웃을 만든다.
+// satori용 슬라이드 트리 빌더.
+// 폰트 크기는 체크리스트 08(최소 28px / 본문 30px+ / 헤드라인 60px+)을 만족하는 값만 쓴다.
+import { MIN_FONT_SIZE } from "./theme.js";
+
+const FONT = {
+  footer: MIN_FONT_SIZE, // 28
+  eyebrow: 36,
+  body: 38,
+  point: 34,
+  heading: 62,
+  coverHeadline: 76,
+  coverSub: 38,
+  ctaHeading: 64,
+};
 
 function card(theme, children, extraStyle = {}) {
   return {
@@ -10,7 +23,7 @@ function card(theme, children, extraStyle = {}) {
         width: "100%",
         height: "100%",
         backgroundColor: theme.bg,
-        padding: 64,
+        padding: 56,
         fontFamily: "Noto Sans KR",
         ...extraStyle,
       },
@@ -26,7 +39,7 @@ function card(theme, children, extraStyle = {}) {
               backgroundColor: theme.card,
               border: `2px solid ${theme.border}`,
               borderRadius: 28,
-              padding: 64,
+              padding: 60,
               justifyContent: "space-between",
             },
             children,
@@ -37,14 +50,22 @@ function card(theme, children, extraStyle = {}) {
   };
 }
 
-function pill(theme, text) {
+// 본문 블록은 푸터를 제외한 영역의 세로 가운데에 놓는다. 4:5 캔버스에서 아래가 비어 보이는 것을 막는다.
+const MAIN = { display: "flex", flexDirection: "column", flex: 1, justifyContent: "center" };
+
+function hidden() {
+  return { type: "div", props: { style: { display: "none" }, children: [] } };
+}
+
+/** 슬라이드의 5막 역할을 보여주는 배지. 장식 아이콘 대신 텍스트만 쓴다. */
+function badge(theme, text) {
   return {
     type: "div",
     props: {
       style: {
         display: "flex",
         alignSelf: "flex-start",
-        backgroundColor: theme.highlight,
+        backgroundColor: theme.accentSoft,
         color: theme.ink,
         fontSize: 30,
         fontWeight: 700,
@@ -56,17 +77,17 @@ function pill(theme, text) {
   };
 }
 
-function highlightText(theme, text) {
+function eyebrowText(theme, text) {
   return {
     type: "div",
     props: {
       style: {
         display: "flex",
-        fontSize: 44,
+        fontSize: FONT.eyebrow,
         fontWeight: 800,
         color: theme.ink,
-        backgroundColor: theme.highlight,
-        padding: "4px 12px",
+        backgroundColor: theme.accentSoft,
+        padding: "6px 14px",
         lineHeight: 1.35,
       },
       children: text,
@@ -74,33 +95,20 @@ function highlightText(theme, text) {
   };
 }
 
-function handleFooter(theme, handle, pageLabel) {
+function footer(theme, handle, pageLabel) {
   return {
     type: "div",
     props: {
-      style: {
-        display: "flex",
-        flexDirection: "column",
-        gap: 18,
-      },
+      style: { display: "flex", flexDirection: "column", gap: 18 },
       children: [
         {
           type: "div",
-          props: {
-            style: { display: "flex", width: "100%", height: 2, backgroundColor: theme.border },
-            children: [],
-          },
+          props: { style: { display: "flex", width: "100%", height: 2, backgroundColor: theme.border }, children: [] },
         },
         {
           type: "div",
           props: {
-            style: {
-              display: "flex",
-              justifyContent: "space-between",
-              fontSize: 28,
-              color: theme.inkSoft,
-              fontWeight: 400,
-            },
+            style: { display: "flex", justifyContent: "space-between", fontSize: FONT.footer, color: theme.inkSoft },
             children: [
               { type: "div", props: { style: { display: "flex" }, children: handle } },
               { type: "div", props: { style: { display: "flex" }, children: pageLabel } },
@@ -112,21 +120,25 @@ function handleFooter(theme, handle, pageLabel) {
   };
 }
 
+function pageLabel(slide) {
+  return `${slide.index} / ${slide.total}`;
+}
+
 export function buildCover(theme, slide, ctx) {
+  // 표지에 발행일·버전 같은 제작 메타 정보는 넣지 않는다(체크리스트 17).
   return card(theme, [
     {
       type: "div",
       props: {
-        style: { display: "flex", flexDirection: "column", gap: 28 },
+        style: { ...MAIN, gap: 26 },
         children: [
-          slide.date ? pill(theme, slide.date) : { type: "div", props: { style: { display: "none" }, children: [] } },
-          slide.eyebrow ? highlightText(theme, slide.eyebrow) : { type: "div", props: { style: { display: "none" }, children: [] } },
+          slide.eyebrow ? eyebrowText(theme, slide.eyebrow) : hidden(),
           {
             type: "div",
             props: {
               style: {
                 display: "flex",
-                fontSize: 72,
+                fontSize: FONT.coverHeadline,
                 fontWeight: 800,
                 color: theme.ink,
                 lineHeight: 1.2,
@@ -141,8 +153,7 @@ export function buildCover(theme, slide, ctx) {
                 props: {
                   style: {
                     display: "flex",
-                    fontSize: 36,
-                    fontWeight: 400,
+                    fontSize: FONT.coverSub,
                     color: theme.inkSoft,
                     lineHeight: 1.5,
                     marginTop: 8,
@@ -150,11 +161,11 @@ export function buildCover(theme, slide, ctx) {
                   children: slide.subheadline,
                 },
               }
-            : { type: "div", props: { style: { display: "none" }, children: [] } },
+            : hidden(),
         ],
       },
     },
-    handleFooter(theme, ctx.handle, `1 / ${ctx.total}`),
+    footer(theme, ctx.handle, pageLabel(slide)),
   ]);
 }
 
@@ -163,45 +174,83 @@ export function buildContent(theme, slide, ctx) {
     {
       type: "div",
       props: {
-        style: { display: "flex", flexDirection: "column", gap: 30 },
+        style: { ...MAIN, gap: 28 },
         children: [
-          pill(theme, `STEP ${slide.index}`),
+          badge(theme, slide.act || "핵심"),
           {
             type: "div",
             props: {
-              style: {
-                display: "flex",
-                fontSize: 58,
-                fontWeight: 800,
-                color: theme.ink,
-                lineHeight: 1.3,
-                marginTop: 8,
-              },
+              style: { display: "flex", fontSize: FONT.heading, fontWeight: 800, color: theme.ink, lineHeight: 1.3, marginTop: 8 },
               children: slide.heading,
             },
           },
           {
             type: "div",
             props: {
-              style: {
-                display: "flex",
-                fontSize: 38,
-                fontWeight: 400,
-                color: theme.inkSoft,
-                lineHeight: 1.6,
-                marginTop: 4,
-              },
+              style: { display: "flex", fontSize: FONT.body, color: theme.inkSoft, lineHeight: 1.6, marginTop: 4 },
               children: slide.body,
             },
           },
         ],
       },
     },
-    handleFooter(theme, ctx.handle, `${slide.index + 1} / ${ctx.total}`),
+    footer(theme, ctx.handle, pageLabel(slide)),
   ]);
 }
 
-export function buildOutro(theme, slide, ctx) {
+/** 한눈에 정리 슬라이드. 저장 동기를 만드는 장치라 목록을 크게 보여준다. */
+export function buildSummary(theme, slide, ctx) {
+  return card(theme, [
+    {
+      type: "div",
+      props: {
+        style: { ...MAIN, gap: 28 },
+        children: [
+          badge(theme, "한눈에 정리"),
+          {
+            type: "div",
+            props: {
+              style: { display: "flex", fontSize: FONT.heading, fontWeight: 800, color: theme.ink, lineHeight: 1.3 },
+              children: slide.heading,
+            },
+          },
+          {
+            type: "div",
+            props: {
+              style: { display: "flex", flexDirection: "column", gap: 20, marginTop: 8 },
+              children: (slide.points || []).map((point, i) => ({
+                type: "div",
+                props: {
+                  style: { display: "flex", flexDirection: "row", gap: 16, alignItems: "flex-start" },
+                  children: [
+                    {
+                      type: "div",
+                      props: {
+                        style: { display: "flex", fontSize: FONT.point, fontWeight: 800, color: theme.accent },
+                        children: `0${i + 1}`,
+                      },
+                    },
+                    {
+                      type: "div",
+                      props: {
+                        style: { display: "flex", fontSize: FONT.point, color: theme.ink, lineHeight: 1.5 },
+                        children: point,
+                      },
+                    },
+                  ],
+                },
+              })),
+            },
+          },
+        ],
+      },
+    },
+    footer(theme, ctx.handle, pageLabel(slide)),
+  ]);
+}
+
+/** 마지막 CTA 슬라이드. 행동 요청은 하나만 담는다(체크리스트 16). */
+export function buildCta(theme, slide, ctx) {
   return card(
     theme,
     [
@@ -211,7 +260,7 @@ export function buildOutro(theme, slide, ctx) {
           style: {
             display: "flex",
             flexDirection: "column",
-            gap: 28,
+            gap: 26,
             alignItems: "center",
             justifyContent: "center",
             flex: 1,
@@ -221,23 +270,24 @@ export function buildOutro(theme, slide, ctx) {
             {
               type: "div",
               props: {
-                style: { display: "flex", fontSize: 56, fontWeight: 800, color: theme.ink, lineHeight: 1.3 },
+                style: { display: "flex", fontSize: FONT.ctaHeading, fontWeight: 800, color: theme.ink, lineHeight: 1.3 },
                 children: slide.heading,
               },
             },
-            slide.subheading
+            slide.body
               ? {
                   type: "div",
                   props: {
-                    style: { display: "flex", fontSize: 34, color: theme.inkSoft, lineHeight: 1.5 },
-                    children: slide.subheading,
+                    style: { display: "flex", fontSize: FONT.body, color: theme.inkSoft, lineHeight: 1.5 },
+                    children: slide.body,
                   },
                 }
-              : { type: "div", props: { style: { display: "none" }, children: [] } },
+              : hidden(),
+            slide.saveLine ? badge(theme, slide.saveLine) : hidden(),
           ],
         },
       },
-      handleFooter(theme, ctx.handle, `${ctx.total} / ${ctx.total}`),
+      footer(theme, ctx.handle, pageLabel(slide)),
     ],
     { justifyContent: "center" }
   );
@@ -245,6 +295,9 @@ export function buildOutro(theme, slide, ctx) {
 
 export function buildSlideTree(theme, slide, ctx) {
   if (slide.type === "cover") return buildCover(theme, slide, ctx);
-  if (slide.type === "outro") return buildOutro(theme, slide, ctx);
+  if (slide.type === "summary") return buildSummary(theme, slide, ctx);
+  if (slide.type === "cta" || slide.type === "outro") return buildCta(theme, slide, ctx);
   return buildContent(theme, slide, ctx);
 }
+
+export { FONT };

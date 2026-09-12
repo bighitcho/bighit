@@ -12,7 +12,7 @@ async function postForm(url, params) {
  * 이미지 URL 배열을 인스타그램 캐러셀 게시물로 발행한다.
  * @param {string[]} imageUrls 공개 접근 가능한 이미지 URL (raw.githubusercontent.com 등)
  * @param {string} caption
- * @param {{token: string, igUserId: string}} opts
+ * @param {{token: string, igUserId: string, locationId?: string}} opts
  * @returns {Promise<{permalink: string|null, mediaId: string}>}
  */
 export async function publishInstagramCarousel(imageUrls, caption, opts) {
@@ -26,12 +26,16 @@ export async function publishInstagramCarousel(imageUrls, caption, opts) {
     childIds.push(item.id);
   }
 
-  const container = await postForm(`${GRAPH_BASE}/${opts.igUserId}/media`, {
+  const containerParams = {
     media_type: "CAROUSEL",
     children: childIds.join(","),
     caption,
     access_token: opts.token,
-  });
+  };
+  // 위치 태그를 달면 지역 도달이 붙는다. IG_LOCATION_ID 는 해당 장소의 페이지 ID.
+  if (opts.locationId) containerParams.location_id = opts.locationId;
+
+  const container = await postForm(`${GRAPH_BASE}/${opts.igUserId}/media`, containerParams);
 
   const published = await postForm(`${GRAPH_BASE}/${opts.igUserId}/media_publish`, {
     creation_id: container.id,

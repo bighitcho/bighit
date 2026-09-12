@@ -1,35 +1,30 @@
+// 샘플 원고로 (1) 전략 로테이션 (2) 자동 검수 (3) 카드 렌더링까지 한 번에 돌려본다.
+// 사용법: node scripts/render-sample.js [gray|blue|amber]
+import { readFileSync } from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import { sampleContent } from "./fixtures/sample-content.js";
+import { toDeck } from "../src/generator/gemini.js";
+import { planNextPost } from "../src/strategy/rotation.js";
+import { reviewDeck, printReview } from "../src/quality/checklist.js";
 import { renderCardNews } from "../src/render/cardRenderer.js";
 
-const sampleDeck = {
-  themeName: process.argv[2] || "gray",
-  handle: "@my_instagram",
-  slides: [
-    {
-      type: "cover",
-      date: "2026.07.04",
-      eyebrow: "AI가 자동으로 정리해주는",
-      headline: "매일 아침\n경제 뉴스 브리핑",
-      subheadline: "청년 미래적금: 3년 만에 목돈 만드는 정부 지원, 나도 받을 수 있을까?",
-    },
-    {
-      type: "content",
-      index: 1,
-      heading: "무슨 상품인가요?",
-      body: "만 19~34세 청년이 매달 일정 금액을 저축하면\n정부가 지원금을 추가로 얹어주는 적금 상품입니다.",
-    },
-    {
-      type: "content",
-      index: 2,
-      heading: "가입 조건은?",
-      body: "개인소득 7,500만원 이하, 가구소득 중위 180% 이하면\n신청 가능합니다. 매년 접수 기간이 정해져 있어요.",
-    },
-    {
-      type: "outro",
-      heading: "다음엔 또 뭘 만들까요?",
-      subheading: "매일 아침 8시, 경제 뉴스로 찾아올게요",
-    },
-  ],
-};
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const brand = JSON.parse(readFileSync(path.join(__dirname, "..", "data", "brand-config.json"), "utf-8"));
 
-const files = await renderCardNews(sampleDeck, "./out/sample");
-console.log("생성된 파일:", files);
+const themeName = process.argv[2] || "gray";
+const plan = planNextPost({ posts: [] });
+console.log(`전략: ${plan.goal.label} / ${plan.hook.label} / ${plan.principle.label}`);
+
+const deck = toDeck(sampleContent, { themeName, brand, plan });
+const review = reviewDeck(deck, brand, plan);
+printReview(review);
+
+const files = await renderCardNews(deck, "./out/sample");
+console.log(`카드 ${files.length}장 생성:`, files.map((f) => path.basename(f)).join(", "));
+console.log("\n--- 조립된 캡션 ---\n" + deck.igCaption);
+
+if (review.errors.length) {
+  console.error("\n자동 검수 위반이 있어 실패 처리합니다.");
+  process.exit(1);
+}

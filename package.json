@@ -10,7 +10,13 @@
   "scripts": {
     "run-once": "node src/index.js",
     "render-sample": "node scripts/render-sample.js",
-    "refresh-tokens": "node scripts/refresh-tokens.js"
+    "lint-deck": "node scripts/lint-deck.js",
+    "refresh-tokens": "node scripts/refresh-tokens.js",
+    "comment-dm": "node scripts/comment-to-dm.js",
+    "insights": "node scripts/insights.js",
+    "trend-report": "node scripts/trend-report.js",
+    "check": "node scripts/render-sample.js gray",
+    "test": "node scripts/self-test.js"
   },
   "dependencies": {
     "@resvg/resvg-js": "^2.6.2",
