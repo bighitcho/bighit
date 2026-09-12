@@ -1,5 +1,11 @@
 {
-  "_설명": "큐(queue.json)에 소재가 떨어졌을 때 자동으로 소재를 발굴할 기본 카테고리 목록입니다. 자유롭게 추가/수정하세요.",
+  "_설명": "큐(queue.json)가 비었을 때 소재를 자동으로 발굴하는 설정입니다. 인스타 트렌드(Apify) → 구글 뉴스 순서로 시도합니다.",
+
+  "benchmarkAccounts": [],
+  "benchmarkHashtags": [],
+  "resultsLimit": 30,
+  "_발굴설명": "benchmarkAccounts 에 벤치마킹할 공개 계정 아이디를 넣고 APIFY_TOKEN 을 등록하면, 반응 좋은 게시물의 주제만 뽑아 다음 소재로 씁니다(캡션을 그대로 쓰지 않습니다). 무료 크레딧을 아끼려면 resultsLimit 를 20~30으로 두세요.",
+
   "categories": [
     "경제",
     "재테크",

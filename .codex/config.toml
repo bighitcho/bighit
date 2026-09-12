@@ -1,0 +1,7 @@
+# Codex 프로젝트 설정.
+# 루틴한 작업(스키마 필드 추가, 반복 수정, 테스트 작성)은 medium 으로 충분하다.
+# 어려운 문제를 붙일 때만 이 값을 high 로 올리고, 끝나면 되돌린다.
+reasoning_effort = "medium"
+
+# 작업 전에 읽을 맥락 파일.
+project_doc_fallback_filenames = ["CLAUDE.md"]
