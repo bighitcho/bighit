@@ -1,4 +1,4 @@
-node_modules/
-out/
+# Existing .gitignore retained; repository privacy should be managed in GitHub Settings.
 .env
-*.log
+.env.*
+!.env.example
