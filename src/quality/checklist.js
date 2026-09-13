@@ -32,7 +32,7 @@ function headingsOf(slide) {
  * @param {object} plan  planNextPost() 결과
  * @returns {{errors: string[], warnings: string[], passed: string[]}}
  */
-export function reviewDeck(deck, brand, plan) {
+export function reviewDeck(deck, brand, plan, trends = null) {
   const errors = [];
   const warnings = [];
   const passed = [];
@@ -126,9 +126,13 @@ export function reviewDeck(deck, brand, plan) {
   const tags = caption.match(/#[^\s#]+/g) || [];
   check("19 해시태그 개수", tags.length >= 5 && tags.length <= 10, `해시태그가 ${tags.length}개입니다. 5~10개가 적정입니다`);
 
+  // 계층 판정은 실측 조사값(data/trends.json)을 우선 쓰고, 없으면 brand-config 로 돌아간다.
+  const measured = trends?.hashtagTiers;
+  const tierList = (name) =>
+    measured ? (measured[name] || []).map((t) => t.tag) : brand.hashtags[name] || [];
   const tierOf = (tag) => {
-    if ((brand.hashtags.large || []).includes(tag)) return "large";
-    if ((brand.hashtags.medium || []).includes(tag)) return "medium";
+    if (tierList("large").includes(tag)) return "large";
+    if (tierList("medium").includes(tag)) return "medium";
     return "niche";
   };
   const tiers = new Set(tags.map(tierOf));

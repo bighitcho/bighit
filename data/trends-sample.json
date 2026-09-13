@@ -1,0 +1,1134 @@
+{
+  "_설명": "trend-research 분석기를 네트워크 없이 돌려보기 위한 실측 표본. 2026-09-13 Apify 공식 인스타그램 스크레이퍼로 수집했다.",
+  "_주의": "캡션은 후킹 판정에 쓰는 앞부분만 남겼고, 이 문장들은 분석 입력일 뿐 콘텐츠로 재사용하지 않는다.",
+  "collectedAt": "2026-09-13",
+  "posts": [
+    {
+      "username": "salimstandard.kr",
+      "tag": "생활꿀팁",
+      "hashtags": [
+        "살림고민",
+        "생활꿀팁",
+        "살림템추천",
+        "살림기준"
+      ],
+      "caption": "집에서 은근히 계속 거슬리는 불편 하나씩 있지 않나요?\n주방, 욕실, 청소, 수납, 반려생활 중 요즘 가장 해결하고 싶은 걸 댓글로 남겨주세요.",
+      "comments": 0
+    },
+    {
+      "username": "tipbox__",
+      "tag": "생활꿀팁",
+      "hashtags": [
+        "자취꿀팁",
+        "월세보증금",
+        "자취방입주",
+        "월세방원상복구",
+        "생활꿀팁"
+      ],
+      "caption": "월세방 입주할 때, 짐 풀기 전에 사진부터 찍으세요!\n자취 시작한다면 짐 풀기 전에 이 글부터 저장해두세요!",
+      "comments": 0
+    },
+    {
+      "username": "jin_woo051",
+      "tag": "생활꿀팁",
+      "hashtags": [
+        "휴대폰분실",
+        "분실폰",
+        "습득물",
+        "유실물",
+        "LOST112",
+        "분실물",
+        "스마트폰",
+        "생활상식",
+        "생활정보",
+        "생활꿀팁"
+      ],
+      "caption": "길에서 휴대폰을 주웠다면, 주인을 찾아주겠다고 안을 열어보는 건 피하는 게 좋습니다.",
+      "comments": 0
+    },
+    {
+      "username": "tipbox__",
+      "tag": "생활꿀팁",
+      "hashtags": [
+        "여름이불보관",
+        "이불압축팩",
+        "침구정리",
+        "이불세탁",
+        "생활꿀팁"
+      ],
+      "caption": "여름 이불, 그냥 압축팩에 넣어도 될까요?\n저장해두고 이불 정리할 때 한 번씩 체크해보세요!",
+      "comments": 0
+    },
+    {
+      "username": "jin_woo051",
+      "tag": "생활꿀팁",
+      "hashtags": [
+        "접촉사고",
+        "교통사고",
+        "자동차사고",
+        "현금합의",
+        "사고대처",
+        "보험처리",
+        "운전자상식",
+        "자동차정보",
+        "생활정보",
+        "생활꿀팁"
+      ],
+      "caption": "살짝 부딪힌 접촉사고, 현금 받고 바로 끝내도 될까요?",
+      "comments": 0
+    },
+    {
+      "username": "jin_woo051",
+      "tag": "생활꿀팁",
+      "hashtags": [
+        "주차사고",
+        "주차차량파손",
+        "문콕",
+        "차량파손",
+        "블랙박스",
+        "CCTV",
+        "자동차사고",
+        "자동차정보",
+        "생활정보",
+        "생활꿀팁"
+      ],
+      "caption": "주차해둔 내 차가 긁혀 있다면, 차부터 옮기지 마세요.",
+      "comments": 0
+    },
+    {
+      "username": "jin_woo051",
+      "tag": "생활꿀팁",
+      "hashtags": [
+        "착오송금",
+        "잘못입금",
+        "계좌이체",
+        "은행",
+        "금융사기예방",
+        "보이스피싱예방",
+        "돈관리",
+        "생활정보",
+        "생활꿀팁"
+      ],
+      "caption": "내 계좌에 모르는 돈이 들어왔다면, 바로 돌려보내지 마세요.",
+      "comments": 0
+    },
+    {
+      "username": "savvy_us_life",
+      "tag": "생활꿀팁",
+      "hashtags": [
+        "부업",
+        "재택부업",
+        "N잡러",
+        "무자본창업",
+        "돈버는법",
+        "청년부업",
+        "직장인부업",
+        "파이프라인",
+        "온라인부업",
+        "프리랜서",
+        "부수입",
+        "재테크",
+        "인스타부업",
+        "생활꿀팁"
+      ],
+      "caption": "돈 한 푼 없이 시작할 수 있는 부업 아이디어",
+      "comments": 0
+    },
+    {
+      "username": "ofhome.kr",
+      "tag": "생활꿀팁",
+      "hashtags": [
+        "전자레인지꿀팁",
+        "살림꿀팁",
+        "주방꿀팁",
+        "요리꿀팁",
+        "생활꿀팁"
+      ],
+      "caption": "전자레인지, 데우는 데만 쓰고 있었다면 아까워요\n매번 검색하지 말고 필요할 때 꺼내 보게 저장해두세요",
+      "comments": 0
+    },
+    {
+      "username": "victor_axis",
+      "tag": "생활꿀팁",
+      "hashtags": [
+        "추석민생지원금",
+        "민생지원금",
+        "지원금",
+        "정부지원금",
+        "지자체지원금",
+        "생활지원금",
+        "지원금정보",
+        "복지정보",
+        "정부정책",
+        "돈되는정보",
+        "꿀정보",
+        "생활꿀팁",
+        "정보공유"
+      ],
+      "caption": "2026년 추석 민생지원금 총정리!\n필요한 분들이 놓치지 않도록 저장해두세요",
+      "comments": 0
+    },
+    {
+      "username": "today_onetip",
+      "tag": "생활꿀팁",
+      "hashtags": [
+        "오늘의한끗팁",
+        "살림꿀팁",
+        "냉장고청소",
+        "냉장고정리",
+        "생활꿀팁"
+      ],
+      "caption": "냉장고 냄새, 청소해도 다시 나는 이유 5가지\n나중에 확인할 수 있도록 저장해두세요",
+      "comments": 0
+    },
+    {
+      "username": "daily.scoop_kr",
+      "tag": "생활꿀팁",
+      "hashtags": [
+        "니트보관법",
+        "생활꿀팁",
+        "옷정리",
+        "살림노하우",
+        "겨울옷보관"
+      ],
+      "caption": "소중한 가을 니트 일반 옷걸이에 그냥 걸어두지 마세요.",
+      "comments": 0
+    },
+    {
+      "username": "silmuon",
+      "tag": "생활꿀팁",
+      "hashtags": [
+        "이사준비",
+        "이사체크리스트",
+        "주소변경",
+        "전입신고",
+        "생활꿀팁",
+        "생활정보"
+      ],
+      "caption": "이사 후 이것까지 확인하셨나요?\n나중에 이사할 때 다시 볼 수 있도록 저장해두셔도 좋아요.",
+      "comments": 0
+    },
+    {
+      "username": "humorzzip",
+      "tag": "생활꿀팁",
+      "hashtags": [
+        "청년미래적금",
+        "청년적금",
+        "청년정책",
+        "생활꿀팁",
+        "정보공유"
+      ],
+      "caption": "1차 때 놓치고 피눈물 흘렸던 청년들을 위해 다시 문 열린 2차 청년미래적금",
+      "comments": 0
+    },
+    {
+      "username": "cosmosallstory",
+      "tag": "생활꿀팁",
+      "hashtags": [
+        "꿀잠팁",
+        "생활꿀팁",
+        "홈케어",
+        "베개관리",
+        "피부관리"
+      ],
+      "caption": "매일 밤 얼굴을 맞대는 베개, 혹시 '세균 번식지'가 되고 있진 않나요?",
+      "comments": 0
+    },
+    {
+      "username": "dukhonam",
+      "tag": "생활꿀팁",
+      "hashtags": [
+        "창업",
+        "부업",
+        "생활정보",
+        "생활정보허브",
+        "생활꿀팁"
+      ],
+      "caption": "내 돈 300 날릴 뻔함, 스마트스토어 사입 판매하다가",
+      "comments": 0
+    },
+    {
+      "username": "kkultem.note",
+      "tag": "생활꿀팁",
+      "hashtags": [
+        "입냄새관리",
+        "구취관리",
+        "구강관리",
+        "생활꿀팁"
+      ],
+      "caption": "마늘처럼 향 강한 음식 먹고 나면 신경 쓰이는 입냄새",
+      "comments": 0
+    },
+    {
+      "username": "fityoung.lab",
+      "tag": "생활꿀팁",
+      "hashtags": [
+        "비염",
+        "비염약",
+        "비염추천",
+        "약국비염약",
+        "알레르기비염",
+        "환절기",
+        "콧물",
+        "재채기",
+        "건강정보",
+        "약사추천",
+        "생활꿀팁"
+      ],
+      "caption": "현직 약사가 직접 추천하는 약국 비염약 순위 공개!\n좋아요와 저장 버튼 꾹 눌러주시고 친구에게도 공유해 주세요!",
+      "comments": 0
+    },
+    {
+      "username": "microwave.30",
+      "tag": "생활꿀팁",
+      "hashtags": [
+        "레드불",
+        "양치",
+        "치약",
+        "생활꿀팁",
+        "아이디어"
+      ],
+      "caption": "레드불 치약 출시기원",
+      "comments": 0
+    },
+    {
+      "username": "oneul.sseulmo",
+      "tag": "생활꿀팁",
+      "hashtags": [
+        "생활꿀팁",
+        "냉동보관",
+        "과일보관",
+        "살림",
+        "오늘"
+      ],
+      "caption": "과일 상해서 버리지 마세요.\n저장 해 두고 필요할 때 꺼내 보세요",
+      "comments": 0
+    },
+    {
+      "username": "dukhonam",
+      "tag": "생활꿀팁",
+      "hashtags": [
+        "뷰티",
+        "미용",
+        "생활정보",
+        "생활정보허브",
+        "생활꿀팁"
+      ],
+      "caption": "나 피부과에서 10만원 주고 받은 여드름 상담 내용이 진짜 이게 다였음",
+      "comments": 0
+    },
+    {
+      "username": "jogeumdeo_pyeonhage",
+      "tag": "생활꿀팁",
+      "hashtags": [
+        "생활정보",
+        "아침루틴",
+        "생활루틴",
+        "정리습관",
+        "시간관리",
+        "생활꿀팁"
+      ],
+      "caption": "아침마다 어디 뒀지, 뭐 입지 하다 보면 출발 전부터 정신없어질 때가 있죠.",
+      "comments": 0
+    },
+    {
+      "username": "trend_cheatkey",
+      "tag": "생활꿀팁",
+      "hashtags": [
+        "생활꿀팁",
+        "살림꿀팁",
+        "꿀팁모음",
+        "살림노하우",
+        "생활정보"
+      ],
+      "caption": "알아두면 평생 써먹는 살림 & 생활 꿀팁 20가지 모음.zip",
+      "comments": 0
+    },
+    {
+      "username": "min.magazine_",
+      "tag": "생활정보",
+      "hashtags": [
+        "추석연휴",
+        "임시공휴일",
+        "대체공휴일",
+        "추석",
+        "생활정보"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "healthbite__",
+      "tag": "생활정보",
+      "hashtags": [
+        "살림꿀팁",
+        "생활정보",
+        "욕실청소",
+        "락스주의",
+        "건강상식"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "jin_woo051",
+      "tag": "생활정보",
+      "hashtags": [
+        "휴대폰분실",
+        "분실폰",
+        "습득물",
+        "유실물",
+        "LOST112",
+        "생활상식",
+        "생활정보",
+        "생활꿀팁"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "saenghwalmoneylab",
+      "tag": "생활정보",
+      "hashtags": [
+        "국민연금",
+        "크레딧제도",
+        "출산크레딧",
+        "군복무크레딧",
+        "실업크레딧",
+        "생활정보",
+        "노후준비"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "jeongbo_tank",
+      "tag": "생활정보",
+      "hashtags": [
+        "숨은보험금",
+        "내보험찾아줌",
+        "미청구보험금",
+        "생활정보",
+        "모르면손해"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "kodapnote",
+      "tag": "생활정보",
+      "hashtags": [
+        "대한민국오답노트",
+        "코답노트",
+        "생활정보",
+        "알짜정보",
+        "지원금",
+        "복지혜택",
+        "재테크꿀팁"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "kodapnote",
+      "tag": "생활정보",
+      "hashtags": [
+        "대한민국오답노트",
+        "코답노트",
+        "생활정보",
+        "알짜정보",
+        "지원금",
+        "복지혜택",
+        "재테크꿀팁"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "isp_9_29",
+      "tag": "생활정보",
+      "hashtags": [
+        "양말정리",
+        "서랍정리",
+        "생활정보",
+        "정리습관"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "alifeofonebook",
+      "tag": "생활정보",
+      "hashtags": [
+        "예금자보호한도",
+        "예금자보호법",
+        "예금보험공사",
+        "저축은행",
+        "목돈관리",
+        "재테크",
+        "짠테크",
+        "금융꿀팁",
+        "생활정보"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "dailyinfo_today",
+      "tag": "생활정보",
+      "hashtags": [
+        "아파트매매",
+        "내집마련",
+        "부동산초보",
+        "아파트구매",
+        "부동산정보",
+        "부동산공부",
+        "생활정보"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "vhql0316",
+      "tag": "생활정보",
+      "hashtags": [
+        "식품표시",
+        "생활정보",
+        "식약처"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "jungchaek.zip",
+      "tag": "생활정보",
+      "hashtags": [
+        "근로장려금",
+        "근로장려금신청",
+        "정부지원금",
+        "지원금",
+        "정부정책",
+        "생활정보",
+        "정책정보",
+        "복지정보",
+        "홈택스",
+        "저소득지원"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "klwp_official",
+      "tag": "생활정보",
+      "hashtags": [
+        "임산부음식",
+        "임신정보",
+        "육아정보",
+        "생활정보"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "0_issueking_0",
+      "tag": "생활정보",
+      "hashtags": [
+        "생활정보",
+        "식품안전",
+        "위생정보",
+        "냅킨",
+        "건강정보"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "dailyinfo_today",
+      "tag": "생활정보",
+      "hashtags": [
+        "오늘의뉴스",
+        "경제뉴스",
+        "주식뉴스",
+        "생활정보"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "caghannim",
+      "tag": "생활정보",
+      "hashtags": [
+        "생활정보",
+        "티스토리",
+        "정보공유"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "body_on.lab",
+      "tag": "생활정보",
+      "hashtags": [
+        "감동실화",
+        "따뜻한이야기",
+        "생활정보",
+        "이슈"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "ttmom1719",
+      "tag": "건강정보",
+      "hashtags": [
+        "마그네슘",
+        "젖산마그네슘",
+        "마그네슘섭취",
+        "중년건강",
+        "건강정보"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "charm.balance",
+      "tag": "건강정보",
+      "hashtags": [
+        "환절기건강",
+        "면역력강화",
+        "아침루틴",
+        "건강한습관",
+        "건강차",
+        "아침공복",
+        "체온올리기",
+        "건강정보"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "noh_dong_hyo",
+      "tag": "건강정보",
+      "hashtags": [
+        "종양표지자",
+        "췌장암",
+        "담도암",
+        "건강검진",
+        "소화기내과",
+        "건강정보"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "passionrod03",
+      "tag": "건강정보",
+      "hashtags": [
+        "건강정보",
+        "뇌건강",
+        "계란효능",
+        "치매예방",
+        "다이어트식단"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "korea.now.news",
+      "tag": "건강정보",
+      "hashtags": [
+        "단백질",
+        "근력운동",
+        "운동식사",
+        "건강수치",
+        "건강정보",
+        "건강상식"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "korea.now.news",
+      "tag": "건강정보",
+      "hashtags": [
+        "건강검진",
+        "콜레스테롤",
+        "중성지방",
+        "검진수치",
+        "건강정보",
+        "건강상식"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "korea.now.news",
+      "tag": "건강정보",
+      "hashtags": [
+        "건강기능식품",
+        "영양제라벨",
+        "일일섭취량",
+        "건강정보",
+        "식품표시",
+        "건강상식",
+        "헬스케어"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "korea.now.news",
+      "tag": "건강정보",
+      "hashtags": [
+        "카페인",
+        "오후커피",
+        "수면습관",
+        "커피시간",
+        "건강정보",
+        "생활건강",
+        "건강상식",
+        "헬스케어"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "joo_humor",
+      "tag": "건강정보",
+      "hashtags": [
+        "실화사연",
+        "건강정보",
+        "의학이야기"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "hidrlee_korean",
+      "tag": "건강정보",
+      "hashtags": [
+        "사마귀",
+        "살리실산",
+        "냉동치료",
+        "피부과",
+        "건강정보"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "dailyinfo_today",
+      "tag": "건강정보",
+      "hashtags": [
+        "수면",
+        "숙면",
+        "수면건강",
+        "건강정보",
+        "중년건강",
+        "50대건강",
+        "60대건강",
+        "생활습관",
+        "건강관리"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "health_archive_note",
+      "tag": "건강정보",
+      "hashtags": [
+        "수분관리",
+        "물마시기",
+        "건강습관",
+        "생활습관",
+        "건강정보"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "dailyinfo_today",
+      "tag": "건강정보",
+      "hashtags": [
+        "고혈압",
+        "혈압관리",
+        "건강정보",
+        "50대건강",
+        "60대건강",
+        "중년건강"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "rurilab.kr",
+      "tag": "건강정보",
+      "hashtags": [
+        "건강정보",
+        "면역력높이는방법",
+        "스트레스해소",
+        "웰니스라이프"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "somoon.live",
+      "tag": "건강정보",
+      "hashtags": [
+        "독감",
+        "인플루엔자",
+        "유행주의보",
+        "건강정보",
+        "예방접종"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "daily____pick",
+      "tag": "건강정보",
+      "hashtags": [
+        "와인",
+        "팩트체크",
+        "건강정보",
+        "인후염",
+        "와인상식"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "somoon.live",
+      "tag": "건강정보",
+      "hashtags": [
+        "영양제",
+        "비타민",
+        "칼슘",
+        "건강관리",
+        "건강정보"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "sesangmuljeong",
+      "tag": "건강정보",
+      "hashtags": [
+        "전립선암",
+        "전립선건강",
+        "남성건강",
+        "건강상식",
+        "건강정보"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "issueking_0",
+      "tag": "건강정보",
+      "hashtags": [
+        "대장건강",
+        "식습관개선",
+        "건강식단",
+        "건강정보",
+        "식단관리"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "0_issueking_0",
+      "tag": "건강정보",
+      "hashtags": [
+        "생활정보",
+        "식품안전",
+        "위생정보",
+        "냅킨",
+        "건강정보"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "alifeofonebook",
+      "tag": "짠테크",
+      "hashtags": [
+        "예금자보호한도",
+        "예금보험공사",
+        "저축은행",
+        "목돈관리",
+        "재테크",
+        "짠테크",
+        "금융꿀팁",
+        "생활정보"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "tikkul_toon",
+      "tag": "짠테크",
+      "hashtags": [
+        "짠테크",
+        "직장인짠테크",
+        "편의점꿀팁",
+        "재테크초보",
+        "인스타툰",
+        "직장인일상",
+        "가계부",
+        "공감툰",
+        "1일1절약"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "jjanmate",
+      "tag": "짠테크",
+      "hashtags": [
+        "타로",
+        "살까말까",
+        "짠테크",
+        "절약",
+        "충동구매"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "ssok_ssok_news",
+      "tag": "짠테크",
+      "hashtags": [
+        "돈되는뉴스",
+        "쏙쏙뉴스",
+        "재테크",
+        "경제뉴스",
+        "생활경제",
+        "돈버는법",
+        "정부지원금",
+        "꿀팁",
+        "짠테크",
+        "직장인재테크"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "dongap_bubu",
+      "tag": "짠테크",
+      "hashtags": [
+        "서울사랑상품권",
+        "짠테크",
+        "생활비절약",
+        "절약꿀팁",
+        "절약하는방법"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "jjanmate",
+      "tag": "짠테크",
+      "hashtags": [
+        "짠테크",
+        "자취",
+        "절약",
+        "생활꿀팁",
+        "통신비"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "kyoung5000",
+      "tag": "짠테크",
+      "hashtags": [
+        "돈공부",
+        "부자",
+        "짠테크"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "jjanmate",
+      "tag": "짠테크",
+      "hashtags": [
+        "타로",
+        "살까말까",
+        "짠테크",
+        "절약",
+        "과시소비"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "jmjhh2026",
+      "tag": "짠테크",
+      "hashtags": [
+        "한장정리",
+        "짠테크",
+        "농축산물할인",
+        "추석장보기",
+        "장바구니절약",
+        "생활비절약",
+        "명절준비"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "jjanmate",
+      "tag": "짠테크",
+      "hashtags": [
+        "짠테크",
+        "자취",
+        "절약",
+        "생활꿀팁",
+        "도서관"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "jjanmate",
+      "tag": "짠테크",
+      "hashtags": [
+        "타로",
+        "살까말까",
+        "짠테크",
+        "절약",
+        "정리정돈"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "ssok_ssok_news",
+      "tag": "짠테크",
+      "hashtags": [
+        "돈되는뉴스",
+        "쏙쏙뉴스",
+        "재테크",
+        "경제뉴스",
+        "생활경제",
+        "돈버는법",
+        "정부지원금",
+        "꿀팁",
+        "짠테크",
+        "직장인재테크"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "gonggamintoon",
+      "tag": "짠테크",
+      "hashtags": [
+        "인스타툰",
+        "공감툰",
+        "직장인툰",
+        "짠테크",
+        "연말정산"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "daily_cardnews",
+      "tag": "짠테크",
+      "hashtags": [
+        "소비",
+        "트렌드",
+        "짠테크",
+        "절약팁",
+        "소비습관",
+        "가성비",
+        "생활비절약",
+        "요노족",
+        "카드뉴스",
+        "직장인공부",
+        "월급쟁이재테크",
+        "생활경제"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "jjanmate",
+      "tag": "짠테크",
+      "hashtags": [
+        "타로",
+        "살까말까",
+        "짠테크",
+        "절약",
+        "무지출"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "jjanmate",
+      "tag": "짠테크",
+      "hashtags": [
+        "타로",
+        "살까말까",
+        "짠테크",
+        "절약",
+        "구독해지"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "jjanmate",
+      "tag": "짠테크",
+      "hashtags": [
+        "짠테크",
+        "자취",
+        "절약",
+        "전기요금",
+        "생활꿀팁"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "top10_ent",
+      "tag": "짠테크",
+      "hashtags": [
+        "짠테크"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "tikkul_toon",
+      "tag": "짠테크",
+      "hashtags": [
+        "짠테크",
+        "직장인짠테크",
+        "월급쟁이",
+        "재테크초보",
+        "인스타툰"
+      ],
+      "caption": "",
+      "comments": 0
+    },
+    {
+      "username": "yh710618",
+      "tag": "짠테크",
+      "hashtags": [
+        "무지출챌린지",
+        "짠테크",
+        "고물가시대",
+        "재테크",
+        "직장인스타그램"
+      ],
+      "caption": "",
+      "comments": 0
+    }
+  ]
+}

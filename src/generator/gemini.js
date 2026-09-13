@@ -1,6 +1,8 @@
 // Gemini로 카드뉴스 원고를 만든다.
 // 프롬프트/스키마는 "발행 전 체크리스트 30"(docs/instagram-checklist-30.md)을 그대로 규칙으로 옮긴 것이고,
 // 생성 결과는 src/quality/checklist.js 가 기계적으로 다시 검수한다.
+import { toPromptBrief } from "../research/trend-research.js";
+
 const API_BASE = "https://generativelanguage.googleapis.com/v1beta/models";
 
 // 인스타그램 캐러셀 1건에 올릴 수 있는 이미지 상한이 10장이라, 표지 1 + 본문 7 + 요약 1 + CTA 1 = 10장 구조를 쓴다.
@@ -78,8 +80,9 @@ const RESPONSE_SCHEMA = {
   ],
 };
 
-function buildRules(brand, plan) {
+function buildRules(brand, plan, trends) {
   const g = brand.guardrails;
+  const trendBrief = toPromptBrief(trends);
   return `너는 인스타그램 카드뉴스를 전업으로 쓰는 한국어 카피라이터야. 아래 규칙은 실제 도달·저장 데이터로 검증된 것이고, 하나라도 어기면 게시가 자동으로 차단돼.
 
 [이 계정]
@@ -117,6 +120,7 @@ function buildRules(brand, plan) {
 - captionQuestion 은 한 줄로 답할 수 있는 질문 1개.
 - 해시태그·저장 유도·CTA 문구는 코드가 붙이니 캡션 본문에 직접 쓰지 마라.
 
+${trendBrief ? `\n${trendBrief}\n` : ""}
 반드시 지정된 JSON 스키마로만 답해라.`;
 }
 
@@ -130,8 +134,8 @@ function describeCta(brand, plan) {
   return "이 게시물을 저장하게 유도";
 }
 
-function buildPrompt(source, brand, plan, violations) {
-  const rules = buildRules(brand, plan);
+function buildPrompt(source, brand, plan, violations, trends) {
+  const rules = buildRules(brand, plan, trends);
   let sourceBlock;
   if (source.kind === "youtube") {
     sourceBlock = "소재: 함께 첨부한 유튜브 영상의 핵심 내용을 정리해 카드뉴스로 만들어라.";
@@ -153,7 +157,7 @@ function buildPrompt(source, brand, plan, violations) {
 
 /**
  * @param {{kind: string, youtubeUrl?: string, text?: string}} source
- * @param {{apiKey: string, model?: string, brand: object, plan: object, violations?: string[]}} opts
+ * @param {{apiKey: string, model?: string, brand: object, plan: object, violations?: string[], trends?: object}} opts
  */
 export async function generateCardNewsContent(source, opts) {
   const model = opts.model || "gemini-3.6-flash";
@@ -161,7 +165,7 @@ export async function generateCardNewsContent(source, opts) {
   if (source.kind === "youtube") {
     parts.push({ fileData: { fileUri: source.youtubeUrl } });
   }
-  parts.push({ text: buildPrompt(source, opts.brand, opts.plan, opts.violations) });
+  parts.push({ text: buildPrompt(source, opts.brand, opts.plan, opts.violations, opts.trends) });
 
   const res = await fetch(`${API_BASE}/${model}:generateContent?key=${opts.apiKey}`, {
     method: "POST",
@@ -188,37 +192,61 @@ export async function generateCardNewsContent(source, opts) {
   return JSON.parse(text);
 }
 
+/** data/trends.json 의 실측 계층을 buildHashtags 가 쓰는 모양으로 바꾼다. */
+export function tiersFromTrends(trends) {
+  const t = trends?.hashtagTiers;
+  if (!t) return null;
+  const pick = (list) => (list || []).map((x) => x.tag);
+  const tiers = { large: pick(t.large), medium: pick(t.medium), niche: pick(t.niche) };
+  // 세 계층이 다 채워졌을 때만 실측값을 믿는다. 표본이 빈약하면 brand-config 로 돌아간다.
+  return tiers.large.length >= 2 && tiers.medium.length >= 3 && tiers.niche.length >= 2 ? tiers : null;
+}
+
 /**
  * 해시태그 3계층 믹스(대형 2 + 중형 3 + 니치 2~5, 합계 5~10개)를 조립한다.
- * 계정 단위 태그는 brand-config 에서 가져오고, 주제별 니치 태그만 모델 제안을 받는다.
+ *
+ * 대형·중형은 계정이 속한 분야 전체의 도달용 태그라 매주 자동 조사한 실측값(data/trends.json)을 쓴다.
+ * 니치는 다르다. 이 글의 주제에서 나와야 하므로 모델이 제안한 태그를 먼저 쓰고,
+ * 조사된 니치 태그는 실제로 이 글에서 다루는 말일 때만 붙인다.
+ * (조사 표본의 니치 태그를 아무거나 붙이면 남의 글 주제가 내 글에 따라붙는다.)
  */
-export function buildHashtags(brand, extraHashtags = []) {
-  const tiers = brand.hashtags;
+export function buildHashtags(brand, extraHashtags = [], trends = null, topicText = "") {
+  const tiers = tiersFromTrends(trends) || brand.hashtags;
   const clean = (tag) => {
     const t = String(tag).trim().replace(/\s+/g, "");
     if (!t) return null;
     return t.startsWith("#") ? t : `#${t}`;
   };
 
-  const picked = [
-    ...(tiers.large || []).slice(0, 2),
-    ...(tiers.medium || []).slice(0, 3),
-    ...(tiers.niche || []).slice(0, 2),
-  ].map(clean);
+  const out = [];
+  const add = (tag) => {
+    const t = clean(tag);
+    if (t && !out.includes(t) && out.length < 10) out.push(t);
+  };
 
-  for (const extra of extraHashtags) {
-    const tag = clean(extra);
-    if (tag && !picked.includes(tag) && picked.length < 10) picked.push(tag);
+  (brand.hashtags.always || []).forEach(add);
+  (tiers.large || []).slice(0, 2).forEach(add);
+  (tiers.medium || []).slice(0, 3).forEach(add);
+
+  // 니치 — 이 글의 주제에서 나온 것만
+  extraHashtags.forEach(add);
+  const isRelevant = (tag) => topicText.includes(String(tag).replace(/^#/, ""));
+  (tiers.niche || []).filter(isRelevant).slice(0, 3).forEach(add);
+
+  // 그래도 5개가 안 되면 계정 폴백 태그로 채운다
+  for (const tag of brand.hashtags.niche || []) {
+    if (out.length >= 5) break;
+    add(tag);
   }
 
-  return picked.filter(Boolean);
+  return out;
 }
 
 /**
  * 캡션을 [첫 줄 후킹] → [본문] → [저장 유도] → [질문] → [CTA] → [해시태그] 순서로 조립한다.
  * 구조를 코드가 보장하기 위해 모델에게는 조각만 받는다.
  */
-export function buildCaption(content, brand, plan) {
+export function buildCaption(content, brand, plan, trends = null) {
   const blocks = [content.captionFirstLine.trim(), content.captionBody.trim(), brand.cta.saveLine.trim()];
 
   if (content.captionQuestion) blocks.push(content.captionQuestion.trim());
@@ -231,7 +259,7 @@ export function buildCaption(content, brand, plan) {
 
   if (needsDisclaimer(content, brand)) blocks.push(brand.guardrails.disclaimer);
 
-  blocks.push(buildHashtags(brand, content.extraHashtags).join(" "));
+  blocks.push(buildHashtags(brand, content.extraHashtags, trends, collectText(content)).join(" "));
 
   return blocks.filter(Boolean).join("\n\n");
 }
@@ -271,7 +299,7 @@ export function needsDisclaimer(content, brand) {
  * Gemini 결과를 카드 렌더러가 이해하는 deck 형식으로 변환한다.
  * 표지에는 발행일 같은 메타 정보를 넣지 않는다(체크리스트 17).
  */
-export function toDeck(content, { themeName, brand, plan }) {
+export function toDeck(content, { themeName, brand, plan, trends = null }) {
   const slides = [
     {
       type: "cover",
@@ -295,7 +323,7 @@ export function toDeck(content, { themeName, brand, plan }) {
     handle: brand.account.handle,
     slides,
     shareLine: content.shareLine,
-    igCaption: buildCaption(content, brand, plan),
+    igCaption: buildCaption(content, brand, plan, trends),
     threadsText: content.threadsText,
     strategy: { goal: plan.goal.key, hookType: plan.hook.key, principle: plan.principle.key },
   };

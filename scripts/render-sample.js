@@ -11,13 +11,20 @@ import { renderCardNews } from "../src/render/cardRenderer.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const brand = JSON.parse(readFileSync(path.join(__dirname, "..", "data", "brand-config.json"), "utf-8"));
+let trends = null;
+try {
+  trends = JSON.parse(readFileSync(path.join(__dirname, "..", "data", "trends.json"), "utf-8"));
+} catch {
+  // 아직 조사 전이면 brand-config 기본값으로 돈다
+}
 
 const themeName = process.argv[2] || "gray";
 const plan = planNextPost({ posts: [] });
 console.log(`전략: ${plan.goal.label} / ${plan.hook.label} / ${plan.principle.label}`);
 
-const deck = toDeck(sampleContent, { themeName, brand, plan });
-const review = reviewDeck(deck, brand, plan);
+const deck = toDeck(sampleContent, { themeName, brand, plan, trends });
+const review = reviewDeck(deck, brand, plan, trends);
+if (trends) console.log(`현장 조사 반영: 표본 ${trends.sampledPosts}건`);
 printReview(review);
 
 const files = await renderCardNews(deck, "./out/sample");

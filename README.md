@@ -10,7 +10,8 @@ GitHub Actions로 **하루 3번 자동 실행**됩니다.
    가장 뒤처진 유형을 고르고, 후킹 유형 5가지와 설득 원리를 돌려씁니다
 2. `data/queue.json` 의 소재를 순서대로 사용합니다. 큐가 비면 인스타 벤치마크 계정 트렌드(Apify) →
    구글 뉴스 순으로 새 소재를 발굴합니다
-3. Gemini로 **10장 5막 구조** 원고를 만듭니다 (표지 1 + 본문 7 + 요약 1 + CTA 1)
+3. Gemini로 **10장 5막 구조** 원고를 만듭니다 (표지 1 + 본문 7 + 요약 1 + CTA 1).
+   이때 매주 자동 조사한 현장 규칙(`data/trends.json` — 지금 뜨는 후킹 형태, 해시태그 계층)을 프롬프트에 넣습니다
 4. **자동 검수**에서 위반이 나오면 위반 목록을 돌려주며 다시 쓰게 합니다 (최대 3회, 끝내 실패하면 게시 안 함)
 5. `satori` + `resvg`로 4:5(1080×1350) PNG 10장을 렌더링합니다
 6. 이미지를 저장소에 커밋해 공개 URL로 만들고, 인스타그램 캐러셀 + 스레드에 게시합니다
@@ -24,7 +25,7 @@ GitHub Actions로 **하루 3번 자동 실행**됩니다.
 | 비주얼 | 4:5 캔버스, 최소 폰트 28px, 악센트 컬러 1개, 그라디언트·장식 아이콘 없음 |
 | 카피 | 영어 약어·이모지·단정 표현·제작 메타 정보 차단, 제목 마침표 금지, 슬라이드당 어절 30개 이내 |
 | 캡션 | 첫 줄 후킹(표지와 다른 후킹) → 본문 → 저장 유도 → 질문 → CTA → 해시태그 순서로 조립 |
-| 해시태그 | 5~10개, 대형 2 + 중형 3 + 니치 2~5 3계층 믹스 |
+| 해시태그 | 5~10개 3계층 믹스. 대형·중형은 **매주 자동 조사한 실측 태그**, 니치는 그 글의 주제에서 |
 | 계정 안전 | 하루 게시 상한·최소 간격, 공식 API만 사용, 민감 주제 면책 문구 자동 삽입 |
 
 전체 매핑은 [docs/instagram-checklist-30.md](docs/instagram-checklist-30.md) 에 있습니다.
@@ -120,6 +121,8 @@ npm run run-once
 | `npm run lint-deck out/<runId>/deck.json` | 이미 만든 원고 재검수 |
 | `npm run comment-dm` | 댓글 키워드 → 자동 DM 1회 실행 |
 | `npm run insights` | 24시간 지난 게시물의 도달·저장·공유 수집 및 집계 |
+| `npm run research` | 인스타 현장 조사 → `data/trends.json` 갱신 (주 1회 자동 실행) |
+| `npm run research -- --from-sample` | 저장된 실측 표본으로 분석만 (API 키 불필요) |
 | `npm run trend-report` | Apify로 벤치마크 계정 반응 조사 |
 
 ## 폴더 구조
@@ -132,6 +135,7 @@ src/
   content-source/       유튜브/링크/주제 해석, 구글 뉴스·Apify 트렌드 발굴
   generator/gemini.js   프롬프트·스키마·캡션 조립
   quality/checklist.js  발행 전 자동 검수 (위반 시 게시 차단)
+  research/             인스타 현장 조사 (해시태그 계층·후킹 패턴 자동 추출)
   render/               satori 카드 렌더러 + 템플릿 3종 (모두 4:5)
   publish/              인스타 캐러셀 / 스토리 / 스레드 게시, 이미지 공개 호스팅
 data/
@@ -139,6 +143,8 @@ data/
   queue.json            소재 큐 (직접 편집)
   topics-config.json    자동 발굴 설정 (벤치마크 계정 + 뉴스 카테고리)
   dm-templates.json     댓글 키워드별 DM 문구
+  trends.json           자동 조사한 현장 규칙 (해시태그 3계층·후킹 분포)
+  trends-sample.json    조사기 검증용 실측 표본
   history.json          게시 기록 + 전략 + 성과 지표
   insights.json         유형별 성과 집계
 scripts/
@@ -150,6 +156,7 @@ scripts/
   refresh-tokens.js     60일 토큰 갱신
 .github/workflows/
   ci.yml                PR마다 자체 점검 + 샘플 렌더 (API 키 불필요)
+  research-trends.yml   주 1회 인스타 현장 조사
   post-3x-daily.yml     하루 3회 게시
   comment-to-dm.yml     1시간마다 댓글 확인 → DM
   insights.yml          매일 성과 수집

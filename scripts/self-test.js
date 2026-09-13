@@ -4,7 +4,8 @@ import { readFileSync } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { sampleContent } from "./fixtures/sample-content.js";
-import { toDeck, buildHashtags } from "../src/generator/gemini.js";
+import { toDeck, buildHashtags, tiersFromTrends } from "../src/generator/gemini.js";
+import { analyzePosts, toPromptBrief } from "../src/research/trend-research.js";
 import { planNextPost, CONTENT_GOALS } from "../src/strategy/rotation.js";
 import { reviewDeck } from "../src/quality/checklist.js";
 import { resolveTheme, CANVAS } from "../src/render/templates/theme.js";
@@ -83,13 +84,28 @@ check("개수 5~10", tags.length >= 5 && tags.length <= 10, `${tags.length}개`)
 check("중복 없음", new Set(tags).size === tags.length);
 check("모두 # 로 시작", tags.every((t) => t.startsWith("#")));
 
-console.log("\n[6] 모든 테마는 4:5 캔버스여야 한다");
+console.log("\n[6] 현장 조사 결과가 해시태그와 프롬프트에 반영돼야 한다");
+const sample = JSON.parse(readFileSync(path.join(__dirname, "..", "data", "trends-sample.json"), "utf-8"));
+const trends = analyzePosts(sample.posts, { seedTags: ["생활꿀팁", "생활정보", "건강정보", "짠테크"] });
+check("표본 분석됨", trends.sampledPosts === sample.posts.length, `${trends.sampledPosts}건`);
+check("3계층 모두 채워짐", Boolean(tiersFromTrends(trends)));
+check("단일 계정 브랜딩 태그는 대형에서 제외", trends.hashtagTiers.large.every((t) => t.accounts >= 3));
+const measuredTags = buildHashtags(brand, [], trends);
+const fallbackTags = buildHashtags(brand, []);
+check("조사값이 brand-config 폴백보다 우선", measuredTags.join() !== fallbackTags.join());
+check("조사 기반 태그도 5~10개", measuredTags.length >= 5 && measuredTags.length <= 10, `${measuredTags.length}개`);
+check("조사 기반 원고도 검수 통과",
+  reviewDeck(toDeck(sampleContent, { themeName: "gray", brand, plan, trends }), brand, plan, trends).errors.length === 0);
+check("프롬프트 지침 생성됨", toPromptBrief(trends).includes("현장 조사"));
+check("조사 결과 없으면 지침 비어 있음", toPromptBrief(null) === "");
+
+console.log("\n[7] 모든 테마는 4:5 캔버스여야 한다");
 for (const name of ["gray", "blue", "amber", "square", "없는테마"]) {
   const theme = resolveTheme(name);
   check(`${name} → ${theme.width}x${theme.height}`, theme.width === CANVAS.width && theme.height === CANVAS.height);
 }
 
-console.log("\n[7] 슬라이드 구성");
+console.log("\n[8] 슬라이드 구성");
 const deck = toDeck(sampleContent, { themeName: "gray", brand, plan });
 check("10장", deck.slides.length === 10, `${deck.slides.length}장`);
 check("1장 표지 / 9장 요약 / 10장 CTA",

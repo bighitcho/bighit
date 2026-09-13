@@ -25,6 +25,7 @@
 | `npm run lint-deck out/<runId>/deck.json` | 이미 만든 원고 재검수 |
 | `npm run comment-dm` | 댓글 키워드 → 자동 DM |
 | `npm run insights` | 24시간 지난 게시물의 도달·저장·공유 수집 |
+| `npm run research` | 인스타 현장 조사 → data/trends.json 갱신. `-- --from-sample` 로 키 없이 분석만 |
 | `npm run trend-report` | Apify로 벤치마크 계정 반응 조사 |
 
 ## 구조
@@ -35,6 +36,7 @@ src/
   strategy/rotation.js  4:3:2:1 목적 배분 + 후킹/설득 원리 로테이션
   generator/gemini.js   프롬프트·스키마·캡션 조립
   quality/checklist.js  발행 전 자동 검수 (여기서 막히면 게시 안 됨)
+  research/             인스타 현장 조사 → 해시태그 계층·후킹 패턴을 실측으로 뽑는다
   render/               satori 슬라이드 트리 + PNG 렌더
   publish/              인스타/스레드/스토리 게시, 이미지 공개 호스팅
   queue.js              소재 큐 → 인스타 트렌드 → 구글 뉴스 순서
@@ -43,6 +45,7 @@ data/
   queue.json            직접 채우는 소재 큐
   history.json          게시 기록 + 전략 + 성과 지표
   dm-templates.json     댓글 키워드별 DM 문구 (여러 개 = 반복 패턴 방지)
+  trends.json           자동 조사한 현장 규칙. 생성기·검수기가 함께 읽는다
 ```
 
 ## 반드시 지킬 규칙
@@ -53,7 +56,8 @@ data/
 3. **남의 콘텐츠를 복사하지 않는다.** Apify에서 가져오는 건 "요즘 이 주제가 반응 좋다"는 신호뿐이고, 문장은 항상 새로 쓴다.
 4. **단정·보장 표현 금지.** `brand-config.json` 의 `bannedPhrases` 참고. 광고 규정 위반이자 계정 위험이다.
 5. **발행 속도 상한을 낮추지 않는다.** `publishing.maxPostsPerDay` / `minMinutesBetweenPosts` 는 스팸 판정을 피하기 위한 것이다.
-6. **콘텐츠 규칙은 `data/brand-config.json` 한 곳에서만 바꾼다.** 프롬프트·검수기·캡션 조립이 전부 이 파일을 읽는다.
+6. **해시태그를 손으로 채우지 않는다.** `data/trends.json` 이 매주 실측으로 갱신되고, brand-config 의 태그는 조사가 실패했을 때 쓰는 폴백일 뿐이다. 계정 시그니처 태그만 `hashtags.always` 에 넣는다.
+7. **콘텐츠 규칙은 `data/brand-config.json` 한 곳에서만 바꾼다.** 프롬프트·검수기·캡션 조립이 전부 이 파일을 읽는다.
 
 ## 실측 지식 (디버깅으로 확인한 것 — 추측으로 되돌리지 말 것)
 
@@ -64,6 +68,8 @@ data/
 - satori는 CSS 일부만 지원한다. 텍스트 노드를 감싸는 div에는 `display: flex` 가 반드시 있어야 하고, 조건부로 뺄 때는 `display: none` 더미를 넣는다.
 - GitHub Actions의 `schedule` 트리거는 **기본 브랜치의 워크플로 파일만** 실행한다. 작업 브랜치에서는 수동 실행으로만 테스트된다.
 - 렌더 폰트 크기는 28px 미만이면 렌더러가 예외를 던진다(모바일 가독성 하한).
+- 인스타 해시태그 **검색**(`search` + `searchType: hashtag`)은 한글 태그에서 엉뚱한 태그를 물어온다. `directUrls` 에 `explore/tags/<태그>/` 를 직접 넣어야 한다.
+- 인스타는 태그별 게시물 수를 더 이상 공개하지 않는다. 그래서 해시태그 계층은 표본 등장 횟수 + **서로 다른 계정 수**를 규모의 대리 지표로 쓴다. 한 계정만 반복하는 태그는 그 계정 브랜딩이라 도달에 도움이 안 된다.
 
 ## 모델 분담 (Claude Code + Codex 같이 쓸 때)
 

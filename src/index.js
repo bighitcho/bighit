@@ -28,6 +28,16 @@ function loadBrand() {
   return JSON.parse(readFileSync(path.join(__dirname, "..", "data", "brand-config.json"), "utf-8"));
 }
 
+/** 매주 자동 조사한 현장 규칙. 아직 조사 전이면 null 이고, 그 경우 brand-config 기본값으로 돈다. */
+function loadTrends() {
+  try {
+    const trends = JSON.parse(readFileSync(path.join(__dirname, "..", "data", "trends.json"), "utf-8"));
+    return trends.sampledPosts ? trends : null;
+  } catch {
+    return null;
+  }
+}
+
 /**
  * 갑작스러운 활동 폭증은 스팸 신호로 잡힌다(커뮤니티 가이드라인 3).
  * 워크플로가 중복 실행되거나 수동 실행이 겹쳐도 하루 상한과 최소 간격을 넘기지 않게 막는다.
@@ -66,13 +76,13 @@ function commitDataFiles(message) {
 }
 
 /** 자동 검수를 통과할 때까지 다시 쓰게 한다. 끝내 통과 못 하면 게시하지 않는다. */
-async function generateApprovedDeck(source, { apiKey, themeName, brand, plan }) {
+async function generateApprovedDeck(source, { apiKey, themeName, brand, plan, trends }) {
   let violations = [];
 
   for (let attempt = 1; attempt <= MAX_GENERATION_ATTEMPTS; attempt++) {
-    const content = await generateCardNewsContent(source, { apiKey, brand, plan, violations });
-    const deck = toDeck(content, { themeName, brand, plan });
-    const review = reviewDeck(deck, brand, plan);
+    const content = await generateCardNewsContent(source, { apiKey, brand, plan, violations, trends });
+    const deck = toDeck(content, { themeName, brand, plan, trends });
+    const review = reviewDeck(deck, brand, plan, trends);
 
     console.log(`   시도 ${attempt}/${MAX_GENERATION_ATTEMPTS}`);
     printReview(review);
@@ -93,6 +103,13 @@ async function main() {
   const themeName = process.env.CARD_THEME || "gray";
   // IG_HANDLE 환경변수가 있으면 그걸 쓰고, 없으면 brand-config 값을 쓴다.
   if (process.env.IG_HANDLE) brand.account.handle = process.env.IG_HANDLE;
+
+  const trends = loadTrends();
+  if (trends) {
+    console.log(`   현장 조사 반영: 표본 ${trends.sampledPosts}건 (${trends.updatedAt.slice(0, 10)} 기준)`);
+  } else {
+    console.log("   현장 조사 결과 없음 — brand-config 기본값으로 진행합니다. (npm run research)");
+  }
 
   const history = readHistory();
 
@@ -116,7 +133,7 @@ async function main() {
   const source = await resolveContentSource(topic);
 
   console.log("4) 카드뉴스 원고 생성 + 자동 검수 중...");
-  const { deck, review } = await generateApprovedDeck(source, { apiKey: geminiApiKey, themeName, brand, plan });
+  const { deck, review } = await generateApprovedDeck(source, { apiKey: geminiApiKey, themeName, brand, plan, trends });
 
   console.log("5) 카드 이미지 렌더링 중...");
   const runId = new Date().toISOString().replace(/[:.]/g, "-");

@@ -16,7 +16,8 @@
     "insights": "node scripts/insights.js",
     "trend-report": "node scripts/trend-report.js",
     "check": "node scripts/render-sample.js gray",
-    "test": "node scripts/self-test.js"
+    "test": "node scripts/self-test.js",
+    "research": "node scripts/research-trends.js"
   },
   "dependencies": {
     "@resvg/resvg-js": "^2.6.2",
