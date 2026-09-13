@@ -19,6 +19,7 @@
 
 | 명령 | 하는 일 |
 |---|---|
+| `npm test` | 자체 점검. 검수기가 정상 원고를 통과시키고 위반은 막는지 확인한다. PR에서도 자동 실행된다(`.github/workflows/ci.yml`). |
 | `npm run check` | API 키 없이 샘플 원고로 전략→검수→렌더까지 전부 돌려본다. **코드 고친 뒤 항상 이것부터 실행한다.** |
 | `npm run run-once` | 실제 파이프라인 1회 (DRY_RUN=true면 게시 직전까지) |
 | `npm run lint-deck out/<runId>/deck.json` | 이미 만든 원고 재검수 |

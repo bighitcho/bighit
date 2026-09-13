@@ -149,6 +149,7 @@ scripts/
   trend-report.js       Apify 벤치마크 조사
   refresh-tokens.js     60일 토큰 갱신
 .github/workflows/
+  ci.yml                PR마다 자체 점검 + 샘플 렌더 (API 키 불필요)
   post-3x-daily.yml     하루 3회 게시
   comment-to-dm.yml     1시간마다 댓글 확인 → DM
   insights.yml          매일 성과 수집
