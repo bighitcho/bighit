@@ -1,0 +1,288 @@
+{
+  "updatedAt": "2026-09-13T15:21:03.922Z",
+  "source": "instagram/hashtag-explore (apify)",
+  "sampledPosts": 80,
+  "sampledTags": [
+    "생활꿀팁",
+    "생활정보",
+    "건강정보",
+    "짠테크"
+  ],
+  "note": "해시태그 계층은 표본 등장 빈도를 규모의 대리 지표로 삼은 값이다. 인스타가 태그별 게시물 수를 공개하지 않는다.",
+  "hashtagTiers": {
+    "large": [
+      {
+        "tag": "#생활정보",
+        "seen": 28,
+        "accounts": 19
+      },
+      {
+        "tag": "#생활꿀팁",
+        "seen": 27,
+        "accounts": 19
+      },
+      {
+        "tag": "#건강정보",
+        "seen": 22,
+        "accounts": 16
+      },
+      {
+        "tag": "#짠테크",
+        "seen": 21,
+        "accounts": 11
+      },
+      {
+        "tag": "#재테크",
+        "seen": 6,
+        "accounts": 4
+      },
+      {
+        "tag": "#건강상식",
+        "seen": 6,
+        "accounts": 3
+      },
+      {
+        "tag": "#정부지원금",
+        "seen": 4,
+        "accounts": 3
+      }
+    ],
+    "medium": [
+      {
+        "tag": "#살림꿀팁",
+        "seen": 4,
+        "accounts": 4
+      },
+      {
+        "tag": "#지원금",
+        "seen": 4,
+        "accounts": 3
+      },
+      {
+        "tag": "#돈버는법",
+        "seen": 3,
+        "accounts": 2
+      },
+      {
+        "tag": "#정보공유",
+        "seen": 3,
+        "accounts": 3
+      },
+      {
+        "tag": "#경제뉴스",
+        "seen": 3,
+        "accounts": 2
+      },
+      {
+        "tag": "#중년건강",
+        "seen": 3,
+        "accounts": 2
+      },
+      {
+        "tag": "#인스타툰",
+        "seen": 3,
+        "accounts": 2
+      },
+      {
+        "tag": "#생활경제",
+        "seen": 3,
+        "accounts": 2
+      },
+      {
+        "tag": "#생활비절약",
+        "seen": 3,
+        "accounts": 3
+      },
+      {
+        "tag": "#부업",
+        "seen": 2,
+        "accounts": 2
+      },
+      {
+        "tag": "#복지정보",
+        "seen": 2,
+        "accounts": 2
+      },
+      {
+        "tag": "#정부정책",
+        "seen": 2,
+        "accounts": 2
+      }
+    ],
+    "niche": [
+      {
+        "tag": "#휴대폰분실",
+        "seen": 2,
+        "accounts": 1
+      },
+      {
+        "tag": "#분실폰",
+        "seen": 2,
+        "accounts": 1
+      },
+      {
+        "tag": "#습득물",
+        "seen": 2,
+        "accounts": 1
+      },
+      {
+        "tag": "#유실물",
+        "seen": 2,
+        "accounts": 1
+      },
+      {
+        "tag": "#LOST112",
+        "seen": 2,
+        "accounts": 1
+      },
+      {
+        "tag": "#생활상식",
+        "seen": 2,
+        "accounts": 1
+      },
+      {
+        "tag": "#자동차사고",
+        "seen": 2,
+        "accounts": 1
+      },
+      {
+        "tag": "#자동차정보",
+        "seen": 2,
+        "accounts": 1
+      },
+      {
+        "tag": "#생활정보허브",
+        "seen": 2,
+        "accounts": 1
+      },
+      {
+        "tag": "#대한민국오답노트",
+        "seen": 2,
+        "accounts": 1
+      },
+      {
+        "tag": "#코답노트",
+        "seen": 2,
+        "accounts": 1
+      },
+      {
+        "tag": "#알짜정보",
+        "seen": 2,
+        "accounts": 1
+      },
+      {
+        "tag": "#복지혜택",
+        "seen": 2,
+        "accounts": 1
+      },
+      {
+        "tag": "#재테크꿀팁",
+        "seen": 2,
+        "accounts": 1
+      },
+      {
+        "tag": "#예금자보호한도",
+        "seen": 2,
+        "accounts": 1
+      },
+      {
+        "tag": "#예금보험공사",
+        "seen": 2,
+        "accounts": 1
+      },
+      {
+        "tag": "#저축은행",
+        "seen": 2,
+        "accounts": 1
+      },
+      {
+        "tag": "#목돈관리",
+        "seen": 2,
+        "accounts": 1
+      },
+      {
+        "tag": "#금융꿀팁",
+        "seen": 2,
+        "accounts": 1
+      },
+      {
+        "tag": "#식품안전",
+        "seen": 2,
+        "accounts": 1
+      }
+    ]
+  },
+  "hookPatterns": [
+    {
+      "key": "question",
+      "label": "질문형",
+      "posts": 5
+    },
+    {
+      "key": "warning",
+      "label": "경고·반전형",
+      "posts": 5
+    },
+    {
+      "key": "list",
+      "label": "리스트형",
+      "posts": 3
+    }
+  ],
+  "captionNorms": {
+    "medianHashtagCount": 5,
+    "saveLineRate": 0.35,
+    "commentGateRate": 0.04,
+    "shareLineRate": 0.04
+  },
+  "benchmarkAccounts": [
+    {
+      "username": "jjanmate",
+      "posts": 8
+    },
+    {
+      "username": "jin_woo051",
+      "posts": 5
+    },
+    {
+      "username": "dailyinfo_today",
+      "posts": 4
+    },
+    {
+      "username": "korea.now.news",
+      "posts": 4
+    },
+    {
+      "username": "tipbox__",
+      "posts": 2
+    },
+    {
+      "username": "dukhonam",
+      "posts": 2
+    },
+    {
+      "username": "kodapnote",
+      "posts": 2
+    },
+    {
+      "username": "alifeofonebook",
+      "posts": 2
+    },
+    {
+      "username": "0_issueking_0",
+      "posts": 2
+    },
+    {
+      "username": "somoon.live",
+      "posts": 2
+    },
+    {
+      "username": "tikkul_toon",
+      "posts": 2
+    },
+    {
+      "username": "ssok_ssok_news",
+      "posts": 2
+    }
+  ]
+}

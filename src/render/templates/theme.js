@@ -1,43 +1,53 @@
-// 카드뉴스 3종 테마 색상/치수 정의. 레퍼런스 영상의 "기본(그레이)/블루/정사각형 뉴스" 3개 템플릿에 대응.
+// 카드뉴스 테마 정의.
+// 체크리스트 07(4:5 캔버스), 11(악센트 컬러 1개), 12(그라디언트·장식 금지)를 테마 단계에서 강제한다.
+
+// 정사각형보다 4:5가 피드 공간을 30% 더 차지한다. 모든 테마는 1080×1350 고정.
+export const CANVAS = { width: 1080, height: 1350 };
+
+// 모바일 가독성 하한. 이 값보다 작은 글자는 렌더러가 거부한다.
+export const MIN_FONT_SIZE = 28;
+
 export const THEMES = {
   gray: {
     label: "기본(그레이)",
-    width: 1080,
-    height: 1350,
+    ...CANVAS,
     bg: "#F4F3EF",
     card: "#FFFFFF",
     ink: "#1C1C1C",
-    inkSoft: "#6B6B63",
+    inkSoft: "#5F5F57",
     border: "#E5E3DA",
-    highlight: "#D6F26B",
-    accent: "#3A3A32",
+    // 악센트 1개(라임) + 중성색만. accentSoft 는 같은 색의 연한 배경 톤이다.
+    accent: "#4F7A0B",
+    accentSoft: "#D6F26B",
   },
   blue: {
     label: "블루",
-    width: 1080,
-    height: 1350,
+    ...CANVAS,
     bg: "#E9F1FC",
     card: "#FFFFFF",
     ink: "#0F2544",
-    inkSoft: "#4C6690",
+    inkSoft: "#44608C",
     border: "#CFE0F5",
-    highlight: "#CFE1FF",
     accent: "#2F6FED",
+    accentSoft: "#D6E4FF",
   },
-  square: {
-    label: "정사각형 뉴스",
-    width: 1080,
-    height: 1080,
+  amber: {
+    label: "뉴스(앰버)",
+    ...CANVAS,
     bg: "#FFF7E8",
     card: "#FFFFFF",
     ink: "#241C10",
-    inkSoft: "#8A7752",
+    inkSoft: "#7A6842",
     border: "#EFDFB9",
-    highlight: "#F3D06B",
-    accent: "#B9861E",
+    accent: "#A8741A",
+    accentSoft: "#F7E3A8",
   },
 };
 
+// 이전 버전의 CARD_THEME=square(1:1) 설정은 4:5 앰버 테마로 이어받는다.
+const ALIASES = { square: "amber", news: "amber" };
+
 export function resolveTheme(name) {
-  return THEMES[name] || THEMES.gray;
+  const key = ALIASES[name] || name;
+  return THEMES[key] || THEMES.gray;
 }

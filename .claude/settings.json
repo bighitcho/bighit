@@ -1,0 +1,29 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && [ -d node_modules ] || npm install --silent"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(npm run check)",
+      "Bash(npm run render-sample:*)",
+      "Bash(npm run lint-deck:*)",
+      "Bash(npm install)",
+      "Bash(npm ci)",
+      "Bash(node --check:*)",
+      "Bash(node scripts/render-sample.js:*)",
+      "Bash(node scripts/lint-deck.js:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)"
+    ]
+  }
+}
